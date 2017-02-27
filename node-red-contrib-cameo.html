@@ -1,0 +1,170 @@
+<script type="text/javascript">
+    function validateChannelValue(v) {
+        return !isNaN(v) && parseInt(v) >= -1 && parseInt(v) <= 255;
+    }
+
+    RED.nodes.registerType('cameo out',{
+        category: 'output',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value: ""},
+            data_source: {value: "payload"},
+
+			device_type:{value:"par64can_q_8w_bs"},
+            address_start:{value:1, validate:function(v) { return parseInt(v) > 0 && parseInt(v) <= 512 }},
+            channels:{value:"7channels", required:false},
+
+			master_dimmer:{value:0, validate:validateChannelValue},
+            stroboscope:{value:0, validate:validateChannelValue},
+            red:{value:0, validate:validateChannelValue},
+            green:{value:0, validate:validateChannelValue},
+            blue:{value:0, validate:validateChannelValue},
+            white:{value:0, validate:validateChannelValue},
+            color_macro:{value:0, validate:validateChannelValue}
+        },
+        inputs:1,
+        outputs:1,
+        align: "right",
+        icon: "light.png",
+        label: function() {
+            return this.name || "cameo";
+        },
+        oneditprepare: function() {
+            var node = this;
+            $("#node-input-data_source").change(function(e) {
+                var source = $(this).children("option:selected").val();
+                console.log("data_source changed ",source);
+                $("#node-input-parameter-block")[source === "payload" ? 'hide' : 'show']();
+
+                <!-- hide only for payload -->
+                $("#node-input-parameter-device_type")[source !== "payload" ? 'show' : 'hide']();
+                $("#node-input-device_type").val(node.device_type);
+                $("#node-input-device_type").change();
+
+                $("#node-input-parameter-address_start")[source !== "payload" ? 'show' : 'hide']();
+                $("#node-input-address_start").val(node.address_start);
+
+                $("#node-input-parameter-channels")[source !== "payload" ? 'show' : 'hide']();
+                $("#node-input-channels").val(node.channels);
+                $("#node-input-channels").change();
+
+
+                <!-- show only for configuration -->
+                $("#node-input-parameter-master_dimmer")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-master_dimmer").val(node.master_dimmer);
+
+                $("#node-input-parameter-stroboscope")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-stroboscope").val(node.stroboscope);
+
+                $("#node-input-parameter-red")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-red").val(node.red);
+
+                $("#node-input-parameter-green")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-green").val(node.green);
+
+                $("#node-input-parameter-blue")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-blue").val(node.blue);
+
+                $("#node-input-parameter-white")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-white").val(node.white);
+
+                $("#node-input-parameter-color_macro")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-color_macro").val(node.color_macro);
+
+                $("#node-input-parameter-program")[source === "configuration" ? 'show' : 'hide']();
+                $("#node-input-program").val(node.program);
+            });
+
+            $("#node-input-data_source").val(node.data_source);
+            $("#node-input-data_source").change();
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="cameo out">
+	<div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+     <div class="form-row">
+        <label for="node-input-data_source"><i class="icon-tag"></i> Data Source</label>
+        <select id="node-input-data_source">
+        	<option value="payload">from payload</option>
+			<option value="configuration">from Configuration</option>
+			<option value="configuration_helios">from Configuration and Helios function payload</option>
+			<option value="configuration_payload">from Configuration and Payload</option>
+		</select>
+    </div>
+
+    <div id="node-input-parameter-block">
+		<div class="form-row" id="node-input-parameter-device_type">
+			<label for="node-input-device_type"><i class="icon-tag"></i> Device Type</label>
+			<select id="node-input-device_type">
+				<option value="par64can_q_8w_bs">PAR 64 CAN Q 8W BS</option>
+			</select>
+		</div>
+
+		<div class="form-row" id="node-input-parameter-address_start">
+			<label for="node-input-address_start"><i class="icon-tag"></i> Address Start</label>
+			<input type="text" id="node-input-address_start" placeholder="Address Start value">
+		</div>
+
+		<div class="form-row" id="node-input-parameter-channels">
+			<label for="node-input-channels"><i class="icon-tag"></i> Channels Configuration</label>
+			<select id="node-input-channels">
+				<option value="7channels">7 Channels</option>
+			</select>
+		</div>
+
+		<div class="form-row" id="node-input-parameter-master_dimmer">
+			<label for="node-input-master_dimmer"><i class="icon-tag"></i> Master Dimmer</label>
+			<input type="text" id="node-input-master_dimmer" placeholder="Master Dimmer value">
+		</div>
+		<div class="form-row" id="node-input-parameter-stroboscope">
+			<label for="node-input-stroboscope"><i class="icon-tag"></i> Stroboscope</label>
+			<input type="text" id="node-input-stroboscope" placeholder="Stroboscope value">
+		</div>
+		<div class="form-row" id="node-input-parameter-red">
+			<label for="node-input-red"><i class="icon-tag"></i> Red</label>
+			<input type="text" id="node-input-red" placeholder="Red value">
+		</div>
+		<div class="form-row" id="node-input-parameter-green">
+			<label for="node-input-green"><i class="icon-tag"></i> Green</label>
+			<input type="text" id="node-input-green" placeholder="Green value">
+		</div>
+		<div class="form-row" id="node-input-parameter-blue">
+			<label for="node-input-blue"><i class="icon-tag"></i>Blue</label>
+			<input type="text" id="node-input-blue" placeholder="Blue value">
+		</div>
+		<div class="form-row" id="node-input-parameter-white">
+			<label for="node-input-white"><i class="icon-tag"></i> White</label>
+			<input type="text" id="node-input-white" placeholder="White value">
+		</div>
+		<div class="form-row" id="node-input-parameter-color_macro">
+			<label for="node-input-color_macro"><i class="icon-tag"></i> Color Macro/Program</label>
+			<input type="text" id="node-input-color_macro" placeholder="Color Macro value">
+		</div>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="cameo out">
+	<p>Provides an output node to compose payload for Artnet node in oder to control Cameo lamps.
+	For now only PAR 64 CAN Q 8W BS lamp (7-CHANNEL MODE) is supported. </p>
+
+	<p>Payload example:</p>
+	<pre>
+{
+    device_type:"par64can_q_8w_bs",
+    address_start:1,
+    channels:"7channels",
+    master_dimmer:0,
+    stroboscope:0,
+    red:0,
+    green:0,
+    blue:0,
+    white:0,
+    color_macro:0
+}
+	</pre>
+</script>

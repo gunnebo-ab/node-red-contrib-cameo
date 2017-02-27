@@ -1,0 +1,21 @@
+{
+    "name"          : "node-red-contrib-cameo",
+    "version"       : "0.0.1",
+    "description"   : "Node-RED node that compose input for Artnet node to control Cameo lamps",
+	"repository" : {
+        "type":"git",
+        "url":"https://github.com/gunnebo-ab/node-red-contrib-cameo"
+    },
+    "license": "MIT",
+    "keywords": [ "node-red", "cameo", "dmx", "light" ],
+    "node-red"      : {
+        "nodes"     : {
+            "cameo": "node-red-contrib-cameo.js"
+        }
+    },
+    "author": {
+        "name": "Gunnebo AB",
+		"email": "software.support@gunnebo.com",
+        "url": "http://gunnebo.com"
+    }
+}
