@@ -1,7 +1,7 @@
 [![Go to Gunnebo](logo.png)](http://gunnebo.com)
 
 # node-red-contrib-cameo
-Node-RED node that composes input for [node-red-contrib-artnet](https://github.com/gunnebo-ab/node-red-contrib-cameo) to control [Cameo](http://www.cameolight.com) lights.
+Node-RED node that composes input for [node-red-contrib-artnet](https://github.com/gunnebo-ab/node-red-contrib-artnet) to control [Cameo](http://www.cameolight.com) lights.
 
 [Gunnebo](http://www.gunnebo.com/)  (OMX: GUNN) is a multinational corporation headquartered in Gothenburg, Sweden, specializing in security products, services and solutions mainly in the areas of cash management, entrance security, electronic security and safes & vaults. The Gunnebo Group has operations in 32 countries with approximately 5,500 employees (Jan 2016) and a reported global revenue of €660 million for 2015. Gunnebo has been listed on the Stockholm Stock Exchange in Sweden since 1994 and can be found on the NASDAQ OMX Nordic Exchange Stockholm in the Mid Cap Industrials segment.
 
